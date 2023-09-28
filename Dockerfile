@@ -1,23 +1,43 @@
+# Use an official Python runtime as a parent image
 FROM python:3.9-slim
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-
-# Set work directory
+# Set the working directory to /app
 WORKDIR /app
 
-# Install dependencies
-COPY requirements.txt /app/
-RUN python -m venv /app/venv && \
-    /app/venv/bin/pip install --upgrade pip && \
-    /app/venv/bin/pip install -r requirements.txt
+# Update the package index and install system-level dependencies
+RUN apt-get update && apt-get install -y \
+    python3-dev \
+    default-libmysqlclient-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libfreetype6-dev \
+    libssl-dev \
+    libffi-dev \
+    libxml2-dev \
+    libxslt1-dev \
+    libldap2-dev \
+    libsasl2-dev \
+    libcurl4-openssl-dev \
+    libmagickwand-dev \
+    gcc \
+    make \
+    libc-dev
 
-# Copy project
-COPY . /app/
+# Upgrade pip to the latest version
+RUN pip install --upgrade pip
 
-# Activate virtual environment and Collect static files
-RUN /app/venv/bin/python manage.py collectstatic --noinput
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+# Install Python packages specified in requirements.txt
+RUN pip install -r requirements.txt
+
+# Make port 3000 available to the world outside this container
+EXPOSE 3000
+
+# Define environment variable
+ENV NAME World
+
 
 # Run the application with the virtual environment’s Python
 CMD ["/app/venv/bin/gunicorn", "artcritque.wsgi:application", "--bind", "0.0.0.0:8000"]
