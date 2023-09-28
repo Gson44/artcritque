@@ -23,8 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-y_tybqgz8d7x#n^je-0+fil#+bxkx7c8c!zi#r29g&o2%7#dr&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-ALLOWED_HOSTS = ["*"]
-DEBUG = False  # Turn off Debug mode in production
+ALLOWED_HOSTS = ["https://artcritique-production.up.railway.app/"]
+DEBUG = True  # Turn off Debug mode in production
 
 
 
