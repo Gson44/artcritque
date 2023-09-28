@@ -1,25 +1,17 @@
-FROM python:3.9-slim
+# Use an official Python runtime as a parent image
+FROM python:3.8-slim-buster
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-
-# Set work directory
+# Set the working directory in the container to /app
 WORKDIR /app
 
-# Install dependencies
-COPY requirements.txt /app/
-RUN python -m venv /app/venv && \
-    /app/venv/bin/pip install --upgrade pip && \
-    /app/venv/bin/pip install -r requirements.txt
+# Copy the current directory contents into the container at /app
+ADD . /app
 
-# Copy project
-COPY . /app/
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Activate virtual environment and Collect static files
-RUN /app/venv/bin/python manage.py collectstatic --noinput
-
+# Make port 80 available to the world outside this container
 EXPOSE 3000
 
-# Run the application with the virtual environment’s Python
-CMD ["/app/venv/bin/gunicorn", "artcritque.wsgi:application", "--bind", "0.0.0.0:3000"]
+# Run app.py when the container launches
+CMD ["python", "manage.py", "runserver", "0.0.0.0:3000"]
