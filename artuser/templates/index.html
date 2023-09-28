@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body>
+    <nav>
+        <a href="{% url 'sign_in' %}">Sign in</a>
+        <a href="{% url 'sign_up' %}">Sign up</a>
+    </nav>
+    <h2 id="CritiquePhrase">Critique Your Art</h2>
+    <div id="container">
+        <div id="row1">
+            <img src="{% static 'images/banana.jpg' %}" alt="">
+            <img src="{% static 'images/SandOfTime.png' %}" alt="">
+        </div>
+        <div id="row2">
+            <img src="{% static 'images/teaEroticArt.png' %}" alt="">
+            <img src="{% static 'images/womenInDress.png' %}" alt="">
+        </div>
+    </div>
+    <h2 id="GrowPhrase">A Place For Artist To Grow</h2>
+</body>
+</html>

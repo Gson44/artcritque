@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <title>Dashboard</title>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'post_image' %}">Post</a>
+        <a href="{% url 'signout' %}">Sign Out</a>
+
+    </nav>
+
+    <h1>Dashboard</h1>
+    <h3>User Creations</h3>
+    {% for x in data %}
+        <p>{{ x.art_name }}</p>
+        <img src="{{ x.image.url }}" alt=""><br>
+        {% if request.user == x.art_user.user %}
+        <div class="crudContainer">
+            <a class="crudLink" href="{% url 'update_image' x.id  %}">Update</a>
+            <a class="crudLink" href="{% url 'delete_image' x.id %}">Delete</a>
+        </div>
+        {% endif %}
+        <div class="rating-container">
+            <p>Rate this entry:</p>
+            <div class="stars" data-art-entry-id="{{ x.id }}">
+                <span class="star" data-rating="1">★</span>
+                <span class="star" data-rating="2">★</span>
+                <span class="star" data-rating="3">★</span>
+                <span class="star" data-rating="4">★</span>
+                <span class="star" data-rating="5">★</span>
+            </div>
+        </div>
+    {% endfor %}
+    <!-- ... your existing HTML ... -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function(){
+        var csrf_token = '{{ csrf_token }}';
+    
+    $('.stars').each(function() {
+        var $stars = $(this);
+        var art_entry_id = $stars.data('art-entry-id');
+        
+        $.ajax({
+            url: `/get_user_rating/${art_entry_id}/`,  // You will need to create a new view to handle this request and return the user's rating.
+            success: function(rating) {
+                if (rating > 0) {
+                    $stars.children().each(function(index) {
+                        var $star = $(this);
+                        if (index < rating) {
+                            $star.addClass('selected');
+                        }
+                    });
+                }
+            }
+        });
+    });
+
+    $('.star').on('click', function () {
+        var $star = $(this);
+        var $stars = $star.parent();
+        var art_entry_id = $stars.data('art-entry-id');
+        var rating = $star.data('rating');
+        
+        $stars.children().removeClass('selected');  // Remove selected class from all stars.
+        $star.addClass('selected');  // Add selected class to the clicked star.
+        
+        $.ajax({
+            url: `/rate_art_entry/${art_entry_id}/`,
+            method: 'POST',
+            data: { 'rating': rating, 'csrfmiddlewaretoken': csrf_token },
+            success: function (response) {
+                if(response.success) {
+                    alert('Thanks for your rating!');
+                } else if(response.error) {
+                    alert(response.error);
+                }
+            }
+        });
+    });
+    })
+    
+</script>
+<!-- ... your existing HTML ... -->
+
+</body>
+</html>
