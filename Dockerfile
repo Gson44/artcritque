@@ -19,5 +19,7 @@ COPY . /app/
 # Activate virtual environment and Collect static files
 RUN /app/venv/bin/python manage.py collectstatic --noinput
 
+EXPOSE 3000
+
 # Run the application with the virtual environment’s Python
-CMD ["/app/venv/bin/gunicorn", "artcritque.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["/app/venv/bin/gunicorn", "artcritque.wsgi:application", "--bind", "0.0.0.0:3000"]
