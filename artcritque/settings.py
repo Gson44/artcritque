@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-y_tybqgz8d7x#n^je-0+fil#+bxkx7c8c!zi#r29g&o2%7#dr&
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #ALLOWED_HOSTS = ["https://artcritique-production.up.railway.app/"]
-ALLOWED_HOSTS = ["https://artcritique-production.up.railway.app/"]
+ALLOWED_HOSTS = ["*"]
 
 DEBUG = False  # Turn off Debug mode in production
 
@@ -53,7 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'artcritque.urls'
@@ -126,9 +126,8 @@ STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 """
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'artuser/static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

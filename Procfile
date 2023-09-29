@@ -1,1 +1,1 @@
-web: gunicorn artcritque.wsgi:application
+web: gunicorn artcritque.wsgi --logfile -
