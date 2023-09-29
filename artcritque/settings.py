@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 import mimetypes
+import pymysql
+pymysql.install_as_MySQLdb()
 mimetypes.add_type("text/css", ".css", True)
 
 #BASE_DIR = Path(__file__).resolve().parent.parent
@@ -85,8 +87,10 @@ WSGI_APPLICATION = 'artcritque.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'artcritique',
+        'USER': 'root',
+       
     }
 }
 
