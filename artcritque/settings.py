@@ -32,8 +32,8 @@ SECRET_KEY = 'django-insecure-y_tybqgz8d7x#n^je-0+fil#+bxkx7c8c!zi#r29g&o2%7#dr&
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #ALLOWED_HOSTS = ["https://artcritique-production.up.railway.app/"]
-ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ['https://artcritique-production.up.railway.app/']
+ALLOWED_HOSTS = ["artcritique-production.up.railway.app"]
+CSRF_TRUSTED_ORIGINS = ['artcritique-production.up.railway.app']
 DEBUG = False  # Turn off Debug mode in production
 
 
@@ -160,4 +160,8 @@ AUTHENTICATION_BACKENDS = (
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SAMESITE = 'Lax'
 
