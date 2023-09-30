@@ -34,7 +34,7 @@ SECRET_KEY = 'django-insecure-y_tybqgz8d7x#n^je-0+fil#+bxkx7c8c!zi#r29g&o2%7#dr&
 #ALLOWED_HOSTS = ["https://artcritique-production.up.railway.app/"]
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = ['https://artcritique-production.up.railway.app/']
-DEBUG = False  # Turn off Debug mode in production
+DEBUG = True  # Turn off Debug mode in production
 
 
 
